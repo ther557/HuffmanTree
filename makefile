@@ -1,3 +1,3 @@
 cc=gcc
 all:
-	${cc} src/main.c -o bin/main
+	${cc} src/main.c src/Fileread.c -o bin/main
