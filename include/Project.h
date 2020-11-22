@@ -2,7 +2,9 @@
 #define _PROJECT_H_
 #include <stdio.h>
 typedef struct HTNode{
-
+  char data;
+  int weight;
+  int parent,lchild,rchild;
 }HTNode;
 void FileRead(const char *file,char *buff);
 void BuildTree(char buff,HTNode *tree[]);
