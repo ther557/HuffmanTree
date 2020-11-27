@@ -6,7 +6,7 @@ typedef struct HTNode{
   int Wight;
   HTNodep Lift;
   HTNodep Right;
-}HTNode，*HTNodep;
+}HTNode,*HTNodep;
 void FileRead(const char *file,char *buff);
 void BuildTree(char buff,HTNode *tree[]);
 void Code(HTNode tree[],char *HuffCode[],int n);
