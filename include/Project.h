@@ -3,9 +3,10 @@
 #include <stdio.h>
 typedef struct HTNode{
   char data;
-  int weight;
-  int parent,lchild,rchild;
-}HTNode;
+  int Wight;
+  HTNodep Lift;
+  HTNodep Right;
+}HTNode，*HTNodep;
 void FileRead(const char *file,char *buff);
 void BuildTree(char buff,HTNode *tree[]);
 void Code(HTNode tree[],char *HuffCode[],int n);
