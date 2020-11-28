@@ -1,4 +1,4 @@
-#include "../include/Project.h"
+#include <Project.h>
 #include <stdio.h>
 void FileRead(const char *file,char *buff){
 	FILE*fp=fopen(file,"r");
