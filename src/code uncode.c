@@ -1,5 +1,8 @@
+/**
+ *  @author 2020011677 #？王渝浪
+ */
  //哈夫曼编码，通过父节点从下往上找
-void createHuffCode()
+void createHuffCode(char*ht[],char *code[],int n)
 {
     int i,j,length;
 	FILE * fp;
