@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <malloc.h>
 #include <stdbool.h>
-#include "Project.h"
+#include <Project.h>
 
 bool  IsFull(minHeap H)
 {
@@ -99,11 +99,11 @@ bool insert(minHeap H,HTNodep hTree)
 HTNodep buildTree(int max,int freq[],char lett[]){
     minHeap H=CreateMinHeap(max);
     HTNodep T;
-    for (int i = 0; i < H->maxSize; i++)//存储权值及对应字符
+    for (int i = 1; i <=H->maxSize/2; i++)//存储权值及对应字符
     {
         T=NewHuffmanNode();
-        T->weight=freq[i];
-        T->letter=lett[i];
+        T->weight=freq[i-1];
+        T->letter=lett[i-1];
         H->HT[++(H->size)]=T;
     }
     buildMinHeap(H);
@@ -118,25 +118,4 @@ HTNodep buildTree(int max,int freq[],char lett[]){
 	} 
 	T = DeleteMin(H);
 	return T; 
-}
-
-
-void PreOrderTraversal(HTNodep BST)
-{
-	if( BST ){
-		printf("%d ",BST->weight);
-        printf("%c\n",BST->letter);
-		PreOrderTraversal(BST->leftChild); 
-		PreOrderTraversal(BST->rightChild); 
-	}
-}
-
-int main(){
-    int freq[3]={1,2,3};
-    char lett[3]={'a','b','c'};
-    int max=6;
-    HTNodep tree;
-    tree=buildTree(max,freq,lett);
-    PreOrderTraversal(tree);
-    return 0;
 }
