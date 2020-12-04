@@ -1,73 +1,142 @@
 #include <stdio.h>
 #include <malloc.h>
-#include <Project.h>
-/**
- *  @author 2020011678 #?吴麒
- */
-minHeap sortHeap(minHeap H){        //最小堆排序
+#include <stdbool.h>
+#include "Project.h"
+
+bool  IsFull(minHeap H)
+{
+	return (H->size == H->maxSize);
+}
+ 
+bool IsEmpty(minHeap H)
+{
+	return (H->size == 0);
+}
+
+minHeap CreateMinHeap(int MaxSize)
+{ 
+	minHeap H = (minHeap)malloc(sizeof(Heap));
+	H->HT = (HTNodep*)malloc((MaxSize+1) * sizeof(HTNodep));
+	H->size = 0;
+	H->maxSize = MaxSize;
+	HTNodep T = NewHuffmanNode();
+	T->weight = -1;
+    T->letter= '0';
+	H->HT[0] = T;
+	return H;
+}
+
+HTNodep NewHuffmanNode()
+{
+	HTNodep BST = (HTNodep)malloc(sizeof(HTNode));
+	BST->weight = 0;
+    BST->letter = '0';
+	BST->leftChild = BST->rightChild = NULL;
+	return BST;
+} 
+
+minHeap buildMinHeap(minHeap H){
     int i,parent,child;
-    HTNodep temp;
-    for(i=H->size/2;i>=1;i--){
-        for(parent=i;2*parent<=H->size;parent=child){
-            child = 2*parent;
-            if(child!=H->size && (H->HT[child]->weight>H->HT[child+1]->weight)){//有rightchild并且leftchild权值较大
-                child++;        //child移向权值较小者
-            }
-            if(H->HT[parent]->weight > H->HT[child]->weight){
-               temp = H->HT[parent];
-               H->HT[parent] = H->HT[child];
-               H->HT[child] = temp;
-            }
-        }
-    }
-    return H;
+	HTNodep temp;
+	for(i=H->size/2;i>0;i--){
+		temp = H->HT[i];
+		for(parent=i; parent*2<=H->size; parent=child){
+			child = parent*2;
+		    if((child != H->size) && (H->HT[child]->weight > H->HT[child+1]->weight)){
+			    child++;
+		    }
+		    if(temp->weight > H->HT[child]->weight){
+			    H->HT[parent] = H->HT[child];
+		    }else{
+			    break;
+		    }
+	    }
+		H->HT[parent] = temp;
+	} 
+	return H; 
 }
 
-minHeap buildMinHeap(int max,int freq[],char lett[]){       //将数组数据存入结点并进行最小堆排序
-    minHeap H=(minHeap)malloc(sizeof(Heap));
-    H->size=0;
-    H->maxSize=max;
-    H->HT=(HTNodep*)malloc((H->maxSize+1)*sizeof(HTNodep));
-    H->HT[0]=NULL;
-    for (int i = 1; i <= H->maxSize; i++)
+HTNodep DeleteMin(minHeap H)
+{/*从最小堆H中取出权值为最小的元素，并删除一个结点*/
+	int parent,child;
+	HTNodep MinItem,temp = NULL;
+	if( IsEmpty(H) ){
+		printf("最小堆为空\n");
+		return NULL;
+	}
+	MinItem = H->HT[1];  
+	temp = H->HT[H->size--];  
+	for(parent=1; parent*2<=H->size; parent=child){
+		child = parent*2;
+		if((child != H->size) && (H->HT[child]->weight > H->HT[child+1]->weight)){
+			child++;  
+		}
+		if(temp->weight > H->HT[child]->weight){
+			H->HT[parent] = H->HT[child];  
+		}else{
+			break;  
+		}
+	} 
+	H->HT[parent] = temp;  
+	
+	return MinItem; 
+}
+
+bool insert(minHeap H,HTNodep hTree)
+{
+	int i;
+	if( IsFull(H) ){
+		printf("最小堆已满\n");
+		return false;
+	}
+	i = ++H->size;  
+	for(; H->HT[i/2]->weight > hTree->weight; i/=2)   
+	    H->HT[i] = H->HT[i/2];  
+	H->HT[i] = hTree;    
+	return true;
+}
+
+HTNodep buildTree(int max,int freq[],char lett[]){
+    minHeap H=CreateMinHeap(max);
+    HTNodep T;
+    for (int i = 0; i < H->maxSize; i++)//存储权值及对应字符
     {
-        H->HT[i]=(HTNodep)malloc(sizeof(HTNode));
-        H->HT[i]->weight=freq[i];
-        H->HT[i]->leftChild=NULL;
-        H->HT[i]->rightChild=NULL;
-        H->HT[i]->letter=lett[i];
-        H->size++;
+        T=NewHuffmanNode();
+        T->weight=freq[i];
+        T->letter=lett[i];
+        H->HT[++(H->size)]=T;
     }
-    return sortHeap(H);
+    buildMinHeap(H);
+    int i,num;
+	num = H->size;     
+	for(i=1; i<num; i++){
+		T = NewHuffmanNode();  //建立一个新的根结点 
+		T->leftChild = DeleteMin(H);
+		T->rightChild = DeleteMin(H); 
+		T->weight = T->leftChild->weight+T->rightChild->weight;
+		insert(H,T);
+	} 
+	T = DeleteMin(H);
+	return T; 
 }
 
-HTNodep deleteHeap(minHeap H){      //取出第一个即最小值结点，并删除
-    HTNodep temp;
-    temp=H->HT[1];
-    H->HT[1]=H->HT[H->size--];
-    H=sortHeap(H);
-    return temp;
+
+void PreOrderTraversal(HTNodep BST)
+{
+	if( BST ){
+		printf("%d ",BST->weight);
+        printf("%c\n",BST->letter);
+		PreOrderTraversal(BST->leftChild); 
+		PreOrderTraversal(BST->rightChild); 
+	}
 }
 
-void insert(minHeap H,HTNodep hTree){       //将结点插入到序列末尾
-    H->size++;
-    H->HT[H->size] = hTree;
-    H = sortHeap(H);
-}
-
-HTNodep buildTree(int max,int freq[],char lett[]){      //建立Huffman树
-    HTNodep hTree;
-    int n;
-    minHeap H=buildMinHeap(max,freq,lett);
-    n=H->size;
-    for(int i=0;i<n;i++){
-        hTree=(HTNodep)malloc(sizeof(HTNode));
-        hTree->leftChild=deleteHeap(H);     //将最小和次小权值的结点分别分给左右儿子
-        hTree->rightChild=deleteHeap(H);
-        hTree->weight=hTree->leftChild->weight+hTree->rightChild->weight;       //权值为二者之和
-        insert(H,hTree);
-    }
-    hTree=deleteHeap(H);        //传出Huffman树的根节点
-    free(H);
-    return hTree;
+int main(){
+    int freq[3]={1,2,3};
+    char lett[3]={'a','b','c'};
+    int max=6;
+    HTNodep tree;
+    tree=buildTree(max,freq,lett);
+    PreOrderTraversal(tree);
+    return 0;
 }
