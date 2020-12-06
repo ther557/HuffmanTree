@@ -17,14 +17,17 @@ typedef struct {
 
 
 void FileRead(const char *file,char *buff);
-void Encode(HTNode tree[],char *huffCode[],int n);
-void Decode(char huffCode[],FILE *fp);
+void Code(HTNode tree[],char *huffCode[],int n);
+void Uncode(char huffCode[],FILE *fp);
 void WeightInput(char buff[],int *freq[],char *lett[]);
-void insert(minHeap H,HTNodep hTree);
+bool insert(minHeap H,HTNodep hTree);
+bool IsFull(minHeap H);
+bool IsEmpty(minHeap H);
 HTNodep buildTree(int max,int freq[],char lett[]);
-HTNodep deleteHeap(minHeap H);
-minHeap sortHeap(minHeap H);
-minHeap buildMinHeap(int max,int freq[],char lett[]);
+HTNodep DeleteMin(minHeap H);
+HTNodep NewHuffmanNode();
+minHeap CreateMinHeap(int MaxSize);
+minHeap buildMinHeap(minHeap H);
 
 
 #endif
