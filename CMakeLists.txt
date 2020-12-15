@@ -20,7 +20,7 @@ SET(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)           #设置库文件的
 
 
 
-add_library(Base src/BuildTree.c src/code_uncode.c src/Fileread.c)
+add_library(Base src/BuildTree.c src/Fileread.c)
 
 #target_compile_definitions(mv PRIVATE DOT_AVX2_CAN )
 
