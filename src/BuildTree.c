@@ -1,6 +1,3 @@
-#include <stdio.h>
-#include <malloc.h>
-#include <stdbool.h>
 #include <Project.h>
 
 bool  IsFull(minHeap H)

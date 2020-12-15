@@ -1,6 +1,9 @@
 #ifndef _PROJECT_H_
 #define _PROJECT_H_
 #include <stdio.h>
+#include <stdio.h>
+#include <malloc.h>
+#include <stdbool.h>
 
 typedef struct huffmanTreeNode{
   char letter;
