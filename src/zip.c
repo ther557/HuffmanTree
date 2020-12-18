@@ -4,7 +4,11 @@ int main (int argc,char **argv){
         // print error info
         return 1;
     }
-    char buff[256];///?
-    FileRead(argv[1],buff);
+    char *fileInfoRead = NULL;
+
+    FileRead(argv[1],&fileInfoRead);
+
+    puts(fileInfoRead);
+
 
 }
