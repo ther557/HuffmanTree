@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <malloc.h>
 #include <stdbool.h>
-
+#define BUFFSIZE 2
 typedef struct huffmanTreeNode{
   char letter;
   int weight;
@@ -19,7 +19,7 @@ typedef struct {
 }Heap,*minHeap;
 
 
-void FileRead(const char *file,char *buff);
+int FileRead(const char *file,char **buff);
 void Code(HTNode tree[],char *huffCode[],int n);
 void Uncode(char huffCode[],FILE *fp);
 void WeightInput(char buff[],int *freq[],char *lett[]);
