@@ -22,7 +22,7 @@ typedef struct {
 int FileRead(const char *file,char **buff);
 void Code(HTNode tree[],char *huffCode[],int n);
 void Uncode(char huffCode[],FILE *fp);
-void WeightInput(char buff[],int *freq[],char *lett[]);
+int WeightInput(char buff[],int *freq,char *lett);
 bool insert(minHeap H,HTNodep hTree);
 bool IsFull(minHeap H);
 bool IsEmpty(minHeap H);
