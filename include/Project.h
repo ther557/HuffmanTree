@@ -9,6 +9,9 @@ typedef struct huffmanTreeNode{
   struct huffmanTreeNode* rightChild;
 }HTNode,*HTNodep;
 
+
+hTree->leftchild->weight
+
 typedef struct {
     HTNodep* HT;
     int size;
@@ -17,7 +20,7 @@ typedef struct {
 
 
 void FileRead(const char *file,char *buff);
-void Code(HTNode tree[],char *huffCode[],int n);
+void Code(HTNodep hTree,int *huffCode[],int n);
 void Uncode(char huffCode[],FILE *fp);
 void WeightInput(char buff[],int *freq[],char *lett[]);
 bool insert(minHeap H,HTNodep hTree);
