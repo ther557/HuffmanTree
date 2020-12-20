@@ -114,5 +114,5 @@ HTNodep buildTree(int max,int freq[],char lett[]){
 		insert(H,T);
 	} 
 	T = DeleteMin(H);
-	return T; 
+	return T;
 }

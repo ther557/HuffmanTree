@@ -1,4 +1,4 @@
-crc=Fileread.c Frequence_Count.c BuildTree.c 
+crc=Fileread.c Frequence_Count.c BuildTree.c code.c
 cc=gcc
 headfile_path=C:\Users\H\Documents\GitHub\HuffmanTree\include
 lib_path=.
