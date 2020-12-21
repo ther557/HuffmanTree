@@ -2,7 +2,7 @@
 // Created by DevilInChina on 2020/12/18.
 //
 #include "Project.h"
-int WeightInput(char buff[],int *freq,char *lett){
+int Frequence_Count(char buff[],int *freq,char *lett){
     char *beg = buff;
     int cnt[256] = {0};
     while (*beg){

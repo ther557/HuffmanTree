@@ -19,5 +19,6 @@ int FileRead(const char *file,char **buff) {
             }
         }
     }
+    if(fclose(file)==EOF) printf("error when closing file");
     return 1;
 }

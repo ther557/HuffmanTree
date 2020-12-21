@@ -1,5 +1,4 @@
 #include <Project.h>
-#include <stdio.h>
 int FileRead(const char *file,char **buff) {
     FILE *fp = fopen(file, "r");
     if (fp == NULL) {
@@ -19,5 +18,6 @@ int FileRead(const char *file,char **buff) {
             }
         }
     }
+    if(fclose(file)==EOF) printf("error when closing file");
     return 1;
 }

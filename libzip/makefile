@@ -1,11 +1,10 @@
-crc=Fileread.c Frequence_Count.c BuildTree.c code.c
+crc=Fileread.c Frequence_Count.c BuildTree.c enCode.c structOfHuffmantree.c
 cc=gcc
 headfile_path=C:\Users\H\Documents\GitHub\HuffmanTree\include
-lib_path=.
 target:
 	${cc} -shared -fPIC -o libzip.so ${crc} -I ${headfile_path}
 zip:
-	${cc}  zip.c -o for_zip -I ${headfile_path} -lzip -L${lib_path}
+	gcc zip.c -L. -lzip -o for_zip
 
 .PHONY: clean
 clean:

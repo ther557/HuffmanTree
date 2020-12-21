@@ -28,6 +28,7 @@ HTNodep NewHuffmanNode()
 	HTNodep BST = (HTNodep)malloc(sizeof(HTNode));
 	BST->weight = 0;
     BST->letter = '0';
+	BST->order = 0;
 	BST->leftChild = BST->rightChild = NULL;
 	return BST;
 } 
@@ -111,6 +112,7 @@ HTNodep buildTree(int max,int freq[],char lett[]){
 		T->leftChild = DeleteMin(H);
 		T->rightChild = DeleteMin(H); 
 		T->weight = T->leftChild->weight+T->rightChild->weight;
+		T->order=i-1;
 		insert(H,T);
 	} 
 	T = DeleteMin(H);
