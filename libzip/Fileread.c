@@ -1,5 +1,4 @@
 #include <Project.h>
-#include <stdio.h>
 int FileRead(const char *file,char **buff) {
     FILE *fp = fopen(file, "r");
     if (fp == NULL) {

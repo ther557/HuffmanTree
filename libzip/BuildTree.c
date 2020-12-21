@@ -1,5 +1,4 @@
 #include <Project.h>
-#include <stdio.h>
 
 bool  IsFull(minHeap H)
 {

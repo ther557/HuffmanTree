@@ -15,10 +15,11 @@ int main (int argc,char **argv){
     int setSize = Frequence_Count(fileInfoRead,Freq,b);
     HTNodep T=buildTree(setSize*2,Freq,b);
     FILE *fp=NULL;
-    fp=fopen("C:/Users/H/Documents/GitHub/HuffmanTree/bin/zip.ezip","w+");
-    fputs("Huffmantree_Compress_file\n",fp);
-    printStruct(T,fp);
-    //code
-    fputs("EOF",fp);
-    fclose(fp);
+    char strc[1000],code[1000];
+    Code *Codep;
+    printStruct(T,&strc);
+    enCode(T,&code,Codep);
+    strcat(strc,"EndHuffmanTree");
+    strcat(strc,code);
+    //...
 }
