@@ -7,6 +7,7 @@
 #include <stdbool.h>
 #include <string.h>
 #define BUFFSIZE 256
+int NUM=0;
 
 typedef struct huffmanTreeNode{
   char letter;
@@ -38,6 +39,7 @@ bool insert(minHeap H,HTNodep hTree);
 bool IsFull(minHeap H);
 bool IsEmpty(minHeap H);
 char *MatchingString(char *s1, char *s2);
+void Translate(char str[],HTNodep T,FILE *fp);
 HTNodep buildTree(int max,int freq[],char lett[]);
 HTNodep DeleteMin(minHeap H);
 HTNodep NewHuffmanNode();

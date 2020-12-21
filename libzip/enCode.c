@@ -14,14 +14,13 @@ char *MatchingString(char *s1, char *s2)
 }
 void enCode(HTNodep T, char *s, Code *Codep)
 {
-    int i = 0;
     if (T->leftChild)
         enCode(T->leftChild, MatchingString(s, "0"), Codep);
     else
     {
         Code temp = {T->letter, s};
-        Codep[i] = temp;
-        i++;
+        Codep[NUM] = temp;
+        NUM++;
         return NULL;
     }
     if (T->rightChild)
