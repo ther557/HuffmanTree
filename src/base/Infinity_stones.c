@@ -1,4 +1,5 @@
 #include <Project.h>
+#define VERSION 4
 void writeBinaryFile(int length, const char *buf, const char *filePath)
 {
     FILE *pFile = fopen(filePath, "wb");
@@ -73,27 +74,26 @@ void decode_to_str(int strLen, const char *bit, char *str)
     }
 }
 
-void saveFile(const char *filePath, const char *huffmanTree, const char *fileBit)
+void saveFile(const char *filePath,int hufLength,int fileLength, const char *huffmanTree, const char *fileBit)
 {
+    const int beforeOFFSET = VERSION;
     int length = strlen(fileBit);
-
-    int hufLength = strlen(huffmanTree);
     int totMem =
         sizeof(char) *
         (hufLength +
-         (length + 7) / 8 + sizeof(int) / sizeof(char) * 3);
+         (length + 7) / 8 + sizeof(int) / sizeof(char) * beforeOFFSET);
 
     char *memSaved = malloc(totMem);
 
     char *bitsaved = memSaved +
-                     sizeof(char) * (hufLength + sizeof(int) / sizeof(char) * 3);
+                     sizeof(char) * (hufLength + sizeof(int) / sizeof(char) * beforeOFFSET);
 
     int *p = (int *)memSaved;
     *p = CODE;            ///约定暗号
     *(p + 1) = hufLength; /// 记录哈夫曼树大小
     *(p + 2) = length;
-
-    memcpy(p + 3, huffmanTree, sizeof(char) * hufLength);
+    *(p + 3) = fileLength;
+    memcpy(p + beforeOFFSET, huffmanTree, sizeof(char) * hufLength);
 
     encode_to_bit(fileBit, bitsaved);
 
@@ -101,8 +101,9 @@ void saveFile(const char *filePath, const char *huffmanTree, const char *fileBit
     free(memSaved);
 }
 
-void loadFile(const char *filePath, int *hufLength, int *bitLen, char **huffmanTree, char **fileBit)
+void loadFile(const char *filePath, int *hufLength, int *bitLen,int *fileLen, char **huffmanTree, char **fileBit)
 {
+    const int beforeOFFSET = VERSION;
     int totMem;
     char *memSaved = readBinaryFile(filePath, &totMem);
     int *code = (int *)memSaved;
@@ -116,15 +117,15 @@ void loadFile(const char *filePath, int *hufLength, int *bitLen, char **huffmanT
     }
     *hufLength = *(code + 1);
     *bitLen = *(code + 2);
-
+    *fileLen = *(code+3);
     char *bitsaved = memSaved +
-                     sizeof(char) * (*hufLength + sizeof(int) / sizeof(char) * 3);
+                     sizeof(char) * (*hufLength + sizeof(int) / sizeof(char) * beforeOFFSET);
 
     *huffmanTree = malloc(sizeof(char) * (*hufLength + 1));
 
     (*huffmanTree)[*hufLength] = 0;
 
-    memcpy(*huffmanTree, (code + 3), sizeof(char) * (*hufLength));
+    memcpy(*huffmanTree, (code + beforeOFFSET), sizeof(char) * (*hufLength));
 
     *fileBit = malloc(sizeof(char) * (*bitLen + 1));
 
@@ -133,18 +134,4 @@ void loadFile(const char *filePath, int *hufLength, int *bitLen, char **huffmanT
     decode_to_str(*bitLen, bitsaved, *fileBit);
 
     free(memSaved);
-}
-
-int main(int argc, char **argv)
-{
-    int c = 2;
-
-    saveFile("temp", "ss", "000010111011");
-
-    char *huf, *bit;
-    int lh, lb;
-    loadFile("temp", &lh, &lb, &huf, &bit);
-    puts(bit);
-
-    return 0;
 }
