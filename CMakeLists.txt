@@ -17,12 +17,12 @@ SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)       #设置可执行文�
 
 SET(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)           #设置库文件的输出目录
 
+aux_source_directory(${PROJECT_SOURCE_DIR}/src/base ZIPBASE)
 
 
+add_library(Base SHARED ${ZIPBASE})
 
-add_library(Base src/BuildTree.c src/Fileread.c src/Frequence_Count.c)
 
-#target_compile_definitions(mv PRIVATE DOT_AVX2_CAN )
 
 
 add_executable(zip src/zip.c)

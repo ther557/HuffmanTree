@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <Project.h>
 
+
 /*void printStruct(HTNodep T,FILE *fp)
 {
     char str[100]={0};
@@ -19,15 +20,15 @@
     fputs("EndHuffmanTree\n",fp);
 }*/
 
-char printStruct(HTNodep T,char *s)//存储结构为：节点编号+字符+权值，无分隔
+int printStruct(HTNodep T,char *s)//存储结构为：节点编号+字符+权值，无分隔
 {
-    char str[1000];
-    while (T)
-    {
-        MatchingString(*s,itoa(T->order,str,10));
-        MatchingString(*s,T->letter);
-        MatchingString(*s,itoa(T->weight,str,10));
-        printStruct(T->leftChild,*s); 
-		printStruct(T->rightChild,*s); 
+    if(T){
+        if(T->leftChild) {
+            printf("%d %c %d %d\n", T->order, T->letter, T->leftChild->order, T->rightChild->order);
+        }
+        printStruct(T->leftChild,s);
+        printStruct(T->rightChild,s);
+    } else{
+        return 0;
     }
 }

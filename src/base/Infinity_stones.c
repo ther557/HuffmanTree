@@ -1,8 +1,4 @@
-/* fread example: read an entire file */
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#define CODE 10000007
+#include <Project.h>
 void writeBinaryFile(int length, const char *buf, const char *filePath)
 {
     FILE *pFile = fopen(filePath, "wb");
